@@ -1,0 +1,13 @@
+.titulo {
+    text-align: center;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.inputs input {
+    margin: 10px;
+}
