@@ -9,7 +9,7 @@ function App() {
   return (
     <>
     <h1>Sistema do Teorema Chinês do Resto</h1>
-    <div>
+    <div className='inputs'>
       <input type="text" placeholder="3x" inputMode="numeric" />
       <p>≡</p>
       <input type="text" placeholder="5" inputMode="numeric" />
