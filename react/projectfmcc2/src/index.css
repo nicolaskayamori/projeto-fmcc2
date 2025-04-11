@@ -1,13 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Special Gothic Expanded One", sans-serif;;
+}
+
 .titulo {
   text-align: center;
+  padding-bottom: 50px;
 }
 
 .inputs {
   display: flex;
   flex-direction: row;
-}
-
-.inputs input {
-  margin: 10px;
-
-}
+  input {
+    margin: 20px;
+  }
+  p {
+    align-items: center;
+    margin-top: 20px;
+  }
+  button {
+    margin-left: 30px;
+    padding: 0px 20px
+  }
+} 
