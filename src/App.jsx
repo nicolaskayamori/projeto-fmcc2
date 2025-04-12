@@ -23,6 +23,7 @@ function App() {
       <Equation/>
       {equations.map((equation, index) => (
         <Equation
+          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           key={index}
           ladoEsquerdo={equation.ladoEsquerdo}
           ladoDireito={equation.ladoDireito}
@@ -32,7 +33,7 @@ function App() {
       <button type="button" onClick={addEquation}>
         Add equation
       </button>
-      <button type='button'>Enviar</button>
+      <button type='button' onClick={resolveTeorema}>Enviar</button>
     </>
   );
 }
