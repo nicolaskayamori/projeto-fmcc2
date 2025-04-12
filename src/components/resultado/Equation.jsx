@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react'
-   
+
 const Equation = () => {
     const [ladoEsquerdo, setLadoEsquerdo] = useState(0);
   const [ladoDireito, setLadoDireito] = useState(0);
@@ -14,7 +14,6 @@ const Equation = () => {
         <p>(mod</p>
         <input onBlur={(e) => setModulo(e.target.value)} type="text" placeholder="10" inputMode="numeric" />
         <p>)</p>
-        
       </form>
     </div>
     );
