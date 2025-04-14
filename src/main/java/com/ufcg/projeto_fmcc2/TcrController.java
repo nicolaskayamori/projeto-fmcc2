@@ -4,8 +4,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-
 @RestController
 public class TcrController {
 
@@ -24,7 +22,7 @@ public class TcrController {
                 msg += ladoEsquerdo[i] + " = " + ladoDireito[i] + "(mod " + mod[i] + ") precisa calcular inverso\n";
                 int coeficienteA = TcrStatic.calcularInversoMultiplicativo(ladoEsquerdo[i], ladoDireito[i], mod[i]);
                 if (coeficienteA == -1)
-                    return msg += "\nNao foi possivel calcular esse TCR, pois a equecacao -> " + ladoEsquerdo[i] + " = " + ladoDireito[i] + "(mod " + mod[i] + ")" + ", apresenta mod: " + mod[i]
+                    return msg += "\nNao foi possivel calcular esse TCR, pois a equacao \n\n-> " + ladoEsquerdo[i] + " = " + ladoDireito[i] + "(mod " + mod[i] + ")" + ", apresenta mod: " + mod[i]
                             + " e ladoEsquerdo: " + ladoEsquerdo[i].charAt(0) + ", nao CoPrimos";
                 ladoDireito[i] *= coeficienteA;
             }
