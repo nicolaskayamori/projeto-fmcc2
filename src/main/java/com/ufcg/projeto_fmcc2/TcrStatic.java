@@ -19,18 +19,18 @@ public class TcrStatic {
         return retorno += "chegamos ao resultado de: X = " + resultado;
     }
 
-    public static  int calcularInversoMultiplicativo(int ladoEsquerdo, int ladoDireto, int mod) {
+    public static  Integer calcularInversoMultiplicativo(int ladoEsquerdo, int ladoDireto, int mod) {
         if (!coPrimos(new int[]{ladoEsquerdo, mod}))
-            return -1;
-        int coeficienteA = euclidesExtendido(ladoEsquerdo, mod)[1];
+            return null;
+        int coeficienteA = (euclidesExtendido(ladoEsquerdo, mod)[1] % mod + mod) % mod;
         return coeficienteA;
     }
 
-    public static int calcularInversoMultiplicativo(String ladoEsquerdo, int ladoDireto, int mod) {
-        int a = Character.getNumericValue(ladoEsquerdo.charAt(0)); // primeiro numero
+    public static Integer calcularInversoMultiplicativo(String ladoEsquerdo, int ladoDireto, int mod) {
+        int a = Integer.parseInt(ladoEsquerdo.substring(0, ladoEsquerdo.length() - 1)); // primeiro numero
         if (!coPrimos(new int[] {a, mod}))
-            return -1;
-        int coeficienteA = euclidesExtendido(a, mod)[1];
+            return null;
+        int coeficienteA = (euclidesExtendido(a, mod)[1] % mod + mod) % mod;
         return coeficienteA;
     }
 
@@ -51,11 +51,12 @@ public class TcrStatic {
     }
 
     public static boolean coPrimos(int[] numeros) {
-        int resultado = numeros[0];
-        for (int i = 1; i < numeros.length; i++) {
-            resultado = mdc(resultado, numeros[i]);
-            if (resultado != 1)
-                return false;
+        for (int i = 0; i < numeros.length; i++) {
+            for (int j = i + 1; j < numeros.length; j++) {
+                if (mdc(numeros[i], numeros[j]) != 1) {
+                    return false;
+                }
+            }
         }
         return true;
     }
@@ -67,5 +68,13 @@ public class TcrStatic {
             a = temp;
         }
         return a;
+    }
+
+    public static String represenatcaEquacao(String[] ladoEsquerdo, int[] ladoDireito, int[] mod) {
+        String msg = "\n";
+        for (int i = 0; i < ladoDireito.length; i++) {
+            msg += ladoEsquerdo[i] + " = " + ladoDireito[i] + "(mod " + mod[i] + ")\n";
+        }
+        return  msg;
     }
 }

@@ -22,15 +22,16 @@ public class TcrController {
         for (int i = 0; i < ladoDireito.length; i++) {
             if (ladoEsquerdo[i].toLowerCase().charAt(0) != 'x') {
                 msg += ladoEsquerdo[i] + " = " + ladoDireito[i] + "(mod " + mod[i] + ") precisa calcular inverso\n";
-                int coeficienteA = TcrStatic.calcularInversoMultiplicativo(ladoEsquerdo[i], ladoDireito[i], mod[i]);
-                if (coeficienteA == -1)
+                Integer coeficienteA = TcrStatic.calcularInversoMultiplicativo(ladoEsquerdo[i], ladoDireito[i], mod[i]);
+                if (coeficienteA == null)
                     return msg += "\nNao foi possivel calcular esse TCR, pois a equacao -> \n\n" + ladoEsquerdo[i] + " = " + ladoDireito[i] + "(mod " + mod[i] + ")" + ", apresenta mod: " + mod[i]
                             + " e ladoEsquerdo: " + ladoEsquerdo[i].charAt(0) + ", nao CoPrimos";
-                ladoDireito[i] *= coeficienteA;
+                ladoDireito[i] = (ladoDireito[i] * coeficienteA) % mod[i];
             }
             ladoEsquerdo[i] = "x";
         }
 
+        msg += "\nEquacoes na forma inversa" + TcrStatic.represenatcaEquacao(ladoEsquerdo, ladoDireito, mod);
         msg += "\nCalcular o TCR agora: \n\n";
         msg += TcrStatic.tcrStep(ladoEsquerdo, ladoDireito, mod);
         return msg;

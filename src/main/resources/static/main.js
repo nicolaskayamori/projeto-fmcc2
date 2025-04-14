@@ -3,13 +3,13 @@ function getValor(arr) {
     arr.forEach(element => {
         elem.push(element.value)
     });
-    return elem;
+    return elem.join(",");
 }
 
 async function handleClick() {
-    const ladoDireito = getValor(document.querySelectorAll(".direito")).join(",");
-    const ladoEsquerdo = getValor(document.querySelectorAll(".esquerdo")).join(",");
-    const mod = getValor(document.querySelectorAll(".mod")).join(",");
+    const ladoDireito = getValor(document.querySelectorAll(".direito"));
+    const ladoEsquerdo = getValor(document.querySelectorAll(".esquerdo"));
+    const mod = getValor(document.querySelectorAll(".mod"));
 
      try {
         const response = await fetch("http://localhost:8080/test?ladoEsquerdo=" + ladoEsquerdo + "&ladoDireito=" + ladoDireito + "&mod=" + mod);
