@@ -1,17 +1,4 @@
-function getValor(arr){
-    const elem = []
-    arr.forEach(element => {
-        elem.push(element.value)
-    });
-    return elem;
-}
-
-function handleClick() {
-    const ladoDireito = getValor(document.querySelectorAll(".direito")).join(",");
-    const ladoEsquerdo = getValor(document.querySelectorAll(".esquerdo")).join(",");
-    const mod = getValor(document.querySelectorAll(".mod")).join(",");
-
-function getValor(arr){
+function getValor(arr) {
     const elem = []
     arr.forEach(element => {
         elem.push(element.value)
@@ -39,9 +26,10 @@ async function handleClick() {
      }
 }
 
-
-function onClick() {
+function clicar() {
     handleClick().then(result => {
-            alert(result);
-        });
+        alert(result);
+    });
 }
+
+
