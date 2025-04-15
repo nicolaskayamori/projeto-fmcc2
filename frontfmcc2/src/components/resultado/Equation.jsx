@@ -3,8 +3,8 @@ import { useState } from 'react'
 
 const Equation = () => {
     const [ladoEsquerdo, setLadoEsquerdo] = useState(0);
-  const [ladoDireito, setLadoDireito] = useState(0);
-  const [modulo, setModulo] = useState(0); 
+    const [ladoDireito, setLadoDireito] = useState(0);
+    const [modulo, setModulo] = useState(0);
     return (
         <div className='inputs'>
       <form className='inputs'>

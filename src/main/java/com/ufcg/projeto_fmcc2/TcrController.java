@@ -1,39 +1,48 @@
 package com.ufcg.projeto_fmcc2;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "*")
+@RequestMapping("/equacoes")
 @RestController
 public class TcrController {
 
-    @GetMapping("/test")
-    public String getTCRsteps(
-            @RequestParam String[] ladoEsquerdo,
-            @RequestParam int[] ladoDireito,
-            @RequestParam int[] mod
-    ) {
+    @PostMapping
+    public String getTCRsteps( @RequestBody List<EquacaoDTO> equacoes ) {
+
         String msg = "verificar se os mods sao CoPrimos:\n";
-        if (!TcrStatic.coPrimos(mod)) return msg += "\nnao e possivel calcular, os mods nao sao CoPrimos\n";
+        if (!TcrStatic.coPrimos(equacoes))
+            return msg += "\nnao e possivel calcular, os mods nao sao CoPrimos\n";
+
         msg += "\neles sao CoPrimos";
         msg += "\n\nAjustar as equacoes que precisam calcular inverso:\n";
-        for (int i = 0; i < ladoDireito.length; i++) {
-            if (ladoEsquerdo[i].trim().toLowerCase().charAt(0) != 'x' && ladoEsquerdo[i].trim().charAt(0) != '1') {
-                msg += ladoEsquerdo[i] + " = " + ladoDireito[i] + "(mod " + mod[i] + ") precisa calcular inverso\n";
-                Integer coeficienteA = TcrStatic.calcularInversoMultiplicativo(ladoEsquerdo[i], ladoDireito[i], mod[i]);
+
+        for (int i = 0; i < equacoes.size(); i++) {
+            String left = equacoes.get(i).getLeft();
+            int right = equacoes.get(i).getRight();
+            int mod = equacoes.get(i).getMod();
+
+            if (left.trim().toLowerCase().charAt(0) != 'x' && left.trim().charAt(0) != '1') {
+
+                msg += left + " = " + right + "(mod " + mod + ") precisa calcular inverso\n";
+
+                Integer coeficienteA = TcrStatic.calcularInversoMultiplicativo(left, right, mod);
+
                 if (coeficienteA == null)
-                    return msg += "\nNao foi possivel calcular esse TCR, pois a equacao -> \n\n" + ladoEsquerdo[i] + " = " + ladoDireito[i] + "(mod " + mod[i] + ")" + ", apresenta mod: " + mod[i]
-                            + " e ladoEsquerdo: " + ladoEsquerdo[i].charAt(0) + ", nao CoPrimos";
-                ladoDireito[i] = (ladoDireito[i] * coeficienteA) % mod[i];
+                    return msg += "\nNao foi possivel calcular esse TCR, pois a equacao -> \n\n" + left + " = "
+                            + right + "(mod " + mod + ")" + ", apresenta mod: " + mod
+                            + " e ladoEsquerdo: " + left.charAt(0) + ", nao CoPrimos";
+
+                equacoes.get(i).setRight((right * coeficienteA) % mod);
             }
-            ladoEsquerdo[i] = "x";
+            equacoes.get(i).setLeft("x");
         }
 
-        msg += "\nEquacoes na forma inversa" + TcrStatic.represenatcaEquacao(ladoEsquerdo, ladoDireito, mod);
+        msg += "\nEquacoes na forma inversa" + TcrStatic.represenatcaEquacao(equacoes);
         msg += "\nCalcular o TCR agora: \n\n";
-        msg += TcrStatic.tcrStep(ladoEsquerdo, ladoDireito, mod);
+        msg += TcrStatic.tcrStep(equacoes);
         return msg;
     }
 }
