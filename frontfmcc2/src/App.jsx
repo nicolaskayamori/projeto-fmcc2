@@ -18,21 +18,21 @@ function App() {
   };
 
   const resolveTeorema = () => {
-      try {
-              // biome-ignore lint/style/useTemplate: <explanation>
-              const response = await fetch("http://localhost:8080/test?ladoEsquerdo=" + ladoEsquerdo + "&ladoDireito=" + ladoDireito + "&mod=" + mod);
-
-              if (!response.ok) {
-                  return "Erro na requisicao";
-              }
-
-              const data = await response.text();
-              return data;
-
-           } catch (error) {
-              // biome-ignore lint/style/useTemplate: <explanation>
-              return "Erro: " + error.message;
-           }
+//       try {
+//               // biome-ignore lint/style/useTemplate: <explanation>
+//               const response = await fetch("http://localhost:8080/test?ladoEsquerdo=" + ladoEsquerdo + "&ladoDireito=" + ladoDireito + "&mod=" + mod);
+//
+//               if (!response.ok) {
+//                   return "Erro na requisicao";
+//               }
+//
+//               const data = await response.text();
+//               return data;
+//
+//            } catch (error) {
+//               // biome-ignore lint/style/useTemplate: <explanation>
+//               return "Erro: " + error.message;
+//            }
       };
 
   return (
