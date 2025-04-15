@@ -20,7 +20,7 @@ public class TcrController {
         msg += "\neles sao CoPrimos";
         msg += "\n\nAjustar as equacoes que precisam calcular inverso:\n";
         for (int i = 0; i < ladoDireito.length; i++) {
-            if (ladoEsquerdo[i].toLowerCase().charAt(0) != 'x') {
+            if (ladoEsquerdo[i].trim().toLowerCase().charAt(0) != 'x' && ladoEsquerdo[i].trim().charAt(0) != '1') {
                 msg += ladoEsquerdo[i] + " = " + ladoDireito[i] + "(mod " + mod[i] + ") precisa calcular inverso\n";
                 Integer coeficienteA = TcrStatic.calcularInversoMultiplicativo(ladoEsquerdo[i], ladoDireito[i], mod[i]);
                 if (coeficienteA == null)
