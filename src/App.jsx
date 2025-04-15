@@ -30,8 +30,8 @@ function App() {
           modulo={equation.modulo}
         />
       ))}
-      <button type="button" onClick={addEquation}>
-        Add equation
+      <button type="button" className='buttonEquation' onClick={addEquation}>
+        Adicionar Equação
       </button>
       <button type='button' onClick={resolveTeorema}>Enviar</button>
     </>
