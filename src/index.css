@@ -41,3 +41,7 @@ button:hover {
   background-color: green;
   border: none;
 }
+
+.removeEquation {
+  background-color: rgba(100, 1, 0, 0.9);
+}
