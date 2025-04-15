@@ -17,6 +17,10 @@ function App() {
     setEquations([...equations, newEquation]);
   };
 
+  const resolveTeorema =() => {
+    
+  }
+
   return (
     <>
       <h1 className="titulo">Sistema do Teorema Chinês do Resto</h1>
