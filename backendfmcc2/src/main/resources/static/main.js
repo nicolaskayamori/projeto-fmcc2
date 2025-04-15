@@ -1,5 +1,6 @@
 function getValor(arr) {
     const elem = []
+    // biome-ignore lint/complexity/noForEach: <explanation>
     arr.forEach(element => {
         elem.push(element.value)
     });
@@ -12,6 +13,7 @@ async function handleClick() {
     const mod = getValor(document.querySelectorAll(".mod"));
 
      try {
+        // biome-ignore lint/style/useTemplate: <explanation>
         const response = await fetch("http://localhost:8080/test?ladoEsquerdo=" + ladoEsquerdo + "&ladoDireito=" + ladoDireito + "&mod=" + mod);
 
         if (!response.ok) {
@@ -22,6 +24,7 @@ async function handleClick() {
         return data;
 
      } catch (error) {
+        // biome-ignore lint/style/useTemplate: <explanation>
         return "Erro: " + error.message;
      }
 }
