@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Special Gothic Expanded One", sans-serif;;
+}
+
+.titulo {
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  input {
+    margin: 20px;
+  }
+  p {
+    align-items: center;
+    margin-top: 20px;
+  }
+  button {
+    margin-left: 30px;
+    padding: 0px 20px
+  }
+} 
+
+button {
+  margin-top: 20px;
+  padding: 15px;
+  margin-right: 30px;
+  border-radius: 15px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.buttonSubmit {
+  background-color: green;
+  border: none;
+}
