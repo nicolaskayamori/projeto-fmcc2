@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "Special Gothic Expanded One", sans-serif;;
+  font-family: "Special Gothic Expanded One", sans-serif;
 }
 
 .titulo {
@@ -40,4 +40,8 @@ button:hover {
 .buttonSubmit {
   background-color: green;
   border: none;
+}
+
+.removeEquation {
+  background-color: rgba(100, 1, 0, 0.9);
 }

@@ -37,7 +37,10 @@ function App() {
       <button type="button" className='buttonEquation' onClick={addEquation}>
         Adicionar Equação
       </button>
-      <button type='button' onClick={resolveTeorema}>Enviar</button>
+      <button type="button" className='removeEquation'>
+        Remover Equação
+      </button>
+      <button type='button' className='buttonSubmit'>Enviar</button>
     </>
   );
 }
