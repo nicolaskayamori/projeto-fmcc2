@@ -8,20 +8,21 @@ public class TcrStatic {
     public static String tcrStep(List<EquacaoDTO> equacoes) {
         String retorno = "Calculando o M (multipliacaco de todos os mod, que sao coPrimos)\n\n";
         int M = calcularM(equacoes);
+        retorno += "Valor de M = " + M;
         int[] todosCalculos = new int[equacoes.size()];
-        retorno += "realiza a divisao do M por cada mod de cada equacao, e depois calculamos seus inversos\n";
+        retorno += "\nRealiza a divisao do M por cada mod de cada equacao, e depois calculamos seus inversos\n";
         int i = 1;
         for (EquacaoDTO equacao : equacoes) {
             int mod = equacao.getMod();
             int m = M / mod;
-            retorno += "\ncalculamos o m de cada equacao: m" + i + " = " + m;
+            retorno += "\nCalculamos o m de cada equacao: " + M + "/" + mod + " => " + "m" + i + " = " + m;
             todosCalculos[i - 1] = calcularInversoMultiplicativo(m, 1, mod) * equacao.getRight() * m;
             i++;
         }
-        retorno += "\n\nobtemos os calculos de cada multiplicacao (m * d * c), agora basta somar todos e atribuir o mod de M, para descobri o valor de X\n\n";
+        retorno += "\n\nObtemos os calculos de cada multiplicacao (m * d * c), agora basta somar todos e atribuir o mod de M, para descobri o valor de X\n\n";
 
         int resultado = ((Arrays.stream(todosCalculos).reduce(0, (a, b) -> a + b) % M + M) % M); // resultado Positivo
-        return retorno += "chegamos ao resultado de: X = " + resultado;
+        return retorno += "Chegamos ao resultado de: X = " + resultado;
     }
 
     private static int calcularM(List<EquacaoDTO> equacoes) {

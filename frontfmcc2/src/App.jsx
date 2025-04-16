@@ -11,6 +11,11 @@ function App() {
     setServerResponse('');
   };
 
+  const removeEquation = () => {
+      setEquations(equations.slice(0, -1));
+      setServerResponse('');
+      }
+
   // Função para atualizar uma equação específica com base no índice
   const updateEquation = (index, updatedData) => {
     const updatedEquations = [...equations];
@@ -35,7 +40,7 @@ function App() {
         setServerResponse(data);
 
       } catch (error) {
-        console.error('Erro ao enviar requisição:', error);
+        setServerResponse('Erro ao enviar requisição (o servidor nao esta ligado)', error);
       }
   };
 
@@ -58,6 +63,7 @@ function App() {
           Adicionar Equação
         </button>
         <button onClick={resolveTeorema}>Enviar</button>
+        <button onClick={removeEquation}>RemoverEquaco</button>
       </div>
 
       <div className="resposta">
