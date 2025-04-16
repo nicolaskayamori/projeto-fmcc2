@@ -1,22 +1,36 @@
 import React from 'react';
-import { useState } from 'react'
 
-const Equation = () => {
-    const [ladoEsquerdo, setLadoEsquerdo] = useState(0);
-    const [ladoDireito, setLadoDireito] = useState(0);
-    const [modulo, setModulo] = useState(0);
-    return (
-        <div className='inputs'>
-      <form className='inputs'>
-        <input onBlur={(e) => setLadoEsquerdo(e.target.value)} type="text" placeholder="3x" inputMode="numeric" required />
-        <p>≡</p>
-        <input onBlur={(e) => setLadoDireito(e.target.value)} type="text" placeholder="5" inputMode="numeric" required />
-        <p>(mod</p>
-        <input onBlur={(e) => setModulo(e.target.value)} type="text" placeholder="10" inputMode="numeric" />
-        <p>)</p>
-      </form>
+const Equation = ({ index, data, updateEquation }) => {
+  const handleChange = (field, value) => {
+    const updated = { ...data, [field]: field === 'left' ? value : Number(value) };
+    updateEquation(index, updated);  // Chama a função de atualização passada como prop
+  };
+
+  return (
+    <div className="inputs">
+      <input
+        type="text"
+        placeholder="3x"
+        value={data.left}
+        onChange={(e) => handleChange('left', e.target.value)}  // Atualiza o valor
+      />
+      <p>≡</p>
+      <input
+        type="number"
+        placeholder="5"
+        value={data.right}
+        onChange={(e) => handleChange('right', e.target.value)}  // Atualiza o valor
+      />
+      <p>(mod</p>
+      <input
+        type="number"
+        placeholder="10"
+        value={data.mod}
+        onChange={(e) => handleChange('mod', e.target.value)}  // Atualiza o valor
+      />
+      <p>)</p>
     </div>
-    );
+  );
 };
 
 export default Equation;

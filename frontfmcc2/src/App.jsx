@@ -1,66 +1,73 @@
-import { useState } from "react";
-import './App.css';
+import { useState } from 'react';
 import Equation from './components/resultado/Equation';
 
 function App() {
-  const [ladoEsquerdo, setLadoEsquerdo] = useState(0);
-  const [ladoDireito, setLadoDireito] = useState(0);
-  const [modulo, setModulo] = useState(0);
   const [equations, setEquations] = useState([]);
+  const [serverResponse, setServerResponse] = useState('');
 
-  // Variáveis para controle da resposta e do estado de carregamento
-  const [resposta, setResposta] = useState(null); // Começa como null (sem resposta)
-  const [carregando, setCarregando] = useState(false); // Inicialmente, não está carregando
-
+  // Função para adicionar uma nova equação
   const addEquation = () => {
-    const newEquation = {
-      ladoEsquerdo: ladoEsquerdo,
-      ladoDireito: ladoDireito,
-      modulo: modulo,
-    };
-    setEquations([...equations, newEquation]);
+    setEquations([...equations, { left: '', right: 0, mod: 0 }]);
+    setServerResponse('');
   };
 
-  const resolveTeorema = async () => {
+  // Função para atualizar uma equação específica com base no índice
+  const updateEquation = (index, updatedData) => {
+    const updatedEquations = [...equations];
+    updatedEquations[index] = updatedData;
+    setEquations(updatedEquations);
+  };
 
-    const equacao = {
-        ladosDireitos:
-        }
-    setCarregando(true); // Ativa o estado de carregamento quando a requisição começa
+  // Função para enviar as equações
+  const resolveTeorema = async () => {
+    const jsonEquations = JSON.stringify(equations);
 
     try {
-      // Envia os dados para o backend
-      const res = await fetch("http://localhost:8080/test?ladoEsquerdo=" + ladosEsquerdos + "&ladoDireito=" + ladosDireitos + "&mod=" + mods);
-      const texto = await res.text(); // Recebe a resposta como string
-      setResposta(texto); // Armazena a resposta recebida
-    } catch (erro) {
-      console.error("Erro ao buscar a resposta:", erro);
-      setResposta("Erro ao buscar"); // Em caso de erro, mostra uma mensagem de erro
-    } finally {
-      setCarregando(false); // Desativa o estado de carregamento após a requisição
-    }
+        const response = await fetch('http://localhost:8080/equacoes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // Define que o corpo da requisição está em JSON
+            },
+            body: jsonEquations, // Passa o corpo da requisição (json)
+        });
+
+        const data = await response.text(); // Pega a resposta do servidor
+        setServerResponse(data);
+
+      } catch (error) {
+        console.error('Erro ao enviar requisição:', error);
+      }
   };
 
   return (
     <>
       <h1 className="titulo">Sistema do Teorema Chinês do Resto</h1>
-      <Equation />
+
+      {/* Mapeia as equações e renderiza um campo de input para cada uma */}
       {equations.map((equation, index) => (
         <Equation
           key={index}
-          ladoEsquerdo={equation.ladoEsquerdo}
-          ladoDireito={equation.ladoDireito}
-          modulo={equation.modulo}
+          index={index}  // Passa o índice
+          data={equation}  // Passa os dados da equação
+          updateEquation={updateEquation}  // Passa a função de atualização
         />
       ))}
-      <button type="button" className='buttonEquation' onClick={addEquation}>
-        Adicionar Equação
-      </button>
-      <button type="button" onClick={resolveTeorema}>Enviar</button>
 
-      {/* Só mostra o estado de carregamento ou a resposta quando o botão "Enviar" for clicado */}
-      <h2>Resposta do servidor:</h2>
-      {carregando ? <p>Carregando o TCR...</p> : resposta && <p>{resposta}</p>}
+      <div className="botoes">
+        <button className="buttonEquation" onClick={addEquation}>
+          Adicionar Equação
+        </button>
+        <button onClick={resolveTeorema}>Enviar</button>
+      </div>
+
+      <div className="resposta">
+        <h2>Resposta do servidor:</h2>
+        <div>
+            {serverResponse.split('\n').map((linha, index) => (
+              <p key={index}>{linha}</p>
+            ))}
+          </div>
+      </div>
     </>
   );
 }
