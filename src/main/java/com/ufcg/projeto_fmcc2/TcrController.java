@@ -1,7 +1,6 @@
 package com.ufcg.projeto_fmcc2;
 
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -24,7 +23,7 @@ public class TcrController {
             int right = equacoes.get(i).getRight();
             int mod = equacoes.get(i).getMod();
 
-            if (left.trim().toLowerCase().charAt(0) != 'x' && left.trim().charAt(0) != '1') {
+            if (left.charAt(0) != 'x' && left.charAt(0) != '1' && TcrStatic.isInteger(left.substring(0, left.length() - 1))) {
 
                 msg += left + " = " + right + "(mod " + mod + ") precisa calcular inverso\n";
 
@@ -36,11 +35,13 @@ public class TcrController {
                             + " e ladoEsquerdo: " + left.charAt(0) + ", nao CoPrimos";
 
                 equacoes.get(i).setRight((right * coeficienteA) % mod);
+            } else {
+                msg += left + " = " + right + "(mod " + mod + ") nao precisa calcular inverso\n";
             }
             equacoes.get(i).setLeft("x");
         }
 
-        msg += "\nEquacoes na forma inversa" + TcrStatic.represenatcaEquacao(equacoes);
+        msg += "\nEquacoes na forma inversa ou na sua forma padrao:" + TcrStatic.represenatcaEquacao(equacoes);
         msg += "\nCalcular o TCR agora: \n\n";
         msg += TcrStatic.tcrStep(equacoes);
         return msg;
