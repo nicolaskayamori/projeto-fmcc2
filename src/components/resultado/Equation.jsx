@@ -1,22 +1,71 @@
 import React from 'react';
-import { useState } from 'react'
 
-const Equation = () => {
-    const [ladoEsquerdo, setLadoEsquerdo] = useState(0);
-  const [ladoDireito, setLadoDireito] = useState(0);
-  const [modulo, setModulo] = useState(0); 
-    return (
-        <div className='inputs'>
-      <form className='inputs'>
-        <input onBlur={(e) => setLadoEsquerdo(e.target.value)} type="text" placeholder="3x" inputMode="numeric" required />
-        <p>≡</p>
-        <input onBlur={(e) => setLadoDireito(e.target.value)} type="text" placeholder="5" inputMode="numeric" required />
-        <p>(mod</p>
-        <input onBlur={(e) => setModulo(e.target.value)} type="text" placeholder="10" inputMode="numeric" />
-        <p>)</p>
-      </form>
+const Equation = ({ index, data, updateEquation }) => {
+  // Validação para o campo left (formato Nx)
+  const handleLeftChange = (e) => {
+    const value = e.target.value;
+    // Permite: números, sinal negativo e 'x' no final
+    if (/^-?\d*x?$/.test(value)) {
+      const updated = { ...data, left: value };
+      updateEquation(index, updated);
+    }
+  };
+
+  // Validação para números inteiros (right)
+  const handleRightChange = (e) => {
+    const value = e.target.value;
+    // Permite apenas números inteiros (incluindo negativos)
+    if (value === '' || /^-?\d*$/.test(value)) {
+      const updated = { ...data, right: value === '' ? '' : Number(value) };
+      updateEquation(index, updated);
+    }
+  };
+
+  // Validação para módulo (números positivos)
+  const handleModChange = (e) => {
+    const value = e.target.value;
+    // Permite apenas números positivos
+    if (value === '' || /^\d*$/.test(value)) {
+      const updated = { ...data, mod: value === '' ? '' : Number(value) };
+      updateEquation(index, updated);
+    }
+  };
+
+  // Garante que o campo left sempre termine com 'x'
+  const handleLeftBlur = () => {
+    if (data.left && !data.left.endsWith('x')) {
+      // biome-ignore lint/style/useTemplate: <explanation>
+      const updated = { ...data, left: data.left + 'x' };
+      updateEquation(index, updated);
+    }
+  };
+
+  return (
+    <div className="inputs">
+      <input
+        type="text"
+        placeholder="3x"
+        value={data.left}
+        onChange={handleLeftChange}
+        onBlur={handleLeftBlur}
+      />
+      <p>≡</p>
+      <input
+        type="text" // Mudamos para type="text" para controle total
+        placeholder="5"
+        value={data.right}
+        onChange={handleRightChange}
+      />
+      <p>(mod</p>
+      <input
+        type="text" // Mudamos para type="text" para controle total
+        placeholder="10"
+        value={data.mod}
+        onChange={handleModChange}
+      />
+      <p>)</p>
     </div>
-    );
+  );
 };
 
-export default Equation;
+export default Equation;  
