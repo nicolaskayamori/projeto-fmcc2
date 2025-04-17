@@ -79,8 +79,10 @@ public class TcrStatic {
 
     public static boolean coPrimos(List<EquacaoDTO> equacoes) {
         for (int i = 0; i < equacoes.size(); i++) {
+            if (equacoes.get(i).getMod() <= 1)
+                return false;
             for (int j = i + 1; j < equacoes.size(); j++) {
-                if (mdc(equacoes.get(i).getMod(), equacoes.get(j).getMod()) != 1) {
+                if (mdc(equacoes.get(i).getMod(), equacoes.get(j).getMod()) != 1 || equacoes.get(j).getMod() == 1) {
                     return false;
                 }
             }
