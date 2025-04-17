@@ -174,9 +174,9 @@ function App() {
 
       <div className="resposta">
         <h2>Resposta:</h2>
-        <div>
+        <div className='passos'>
         <h3>{resultado}</h3>
-        <pre className='passos'>{passos}</pre>
+        <pre >{passos}</pre>
         </div>
       </div>
       {mostraPopup && <Popup />}
