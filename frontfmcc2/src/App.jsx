@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import Equation from './components/resultado/Equation';
+import { FaExclamationTriangle } from 'react-icons/fa';
 
 function App() {
-  const [equations, setEquations] = useState([]);
+  const [equations, setEquations] = useState([{ left: '', right: 0, mod: 0 }]); 
   const [serverResponse, setServerResponse] = useState('');
+  const [mostraPopup, setMostraPopup] = useState(false);
 
   // Função para adicionar uma nova equação
   const addEquation = () => {
@@ -12,9 +14,13 @@ function App() {
   };
 
   const removeEquation = () => {
+    if (equations.length > 1) {
       setEquations(equations.slice(0, -1));
       setServerResponse('');
-      }
+    } else {
+      setMostraPopup(true); // Mostra o popup
+    }
+    };
 
   // Função para atualizar uma equação específica com base no índice
   const updateEquation = (index, updatedData) => {
@@ -44,10 +50,28 @@ function App() {
       }
   };
 
+  const Popup = () => {
+    const [isClosing, setIsClosing] = useState(false);
+  
+    const handleClose = () => {
+      setIsClosing(true);
+      setTimeout(() => setMostraPopup(false), 200); // Tempo igual à duração da animação
+    };
+  
+    return (
+      <div className={`popup-overlay ${isClosing ? 'closing' : ''}`}>
+        <div className={`popup-content popup-animation ${isClosing ? 'closing' : ''}`}>
+          <FaExclamationTriangle className="popup-icon" />
+          <p>Você não pode remover a única equação restante!</p>
+          <button onClick={handleClose}>Fechar</button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <h1 className="titulo">Sistema do Teorema Chinês do Resto</h1>
-
       {/* Mapeia as equações e renderiza um campo de input para cada uma */}
       {equations.map((equation, index) => (
         <Equation
@@ -57,13 +81,13 @@ function App() {
           updateEquation={updateEquation}  // Passa a função de atualização
         />
       ))}
-
+      
       <div className="botoes">
         <button className="buttonEquation" onClick={addEquation}>
           Adicionar Equação
         </button>
-        <button onClick={resolveTeorema}>Enviar</button>
-        <button onClick={removeEquation}>RemoverEquaco</button>
+        <button className='buttonSubmit' onClick={resolveTeorema}>Enviar</button>
+        <button className='buttonRemove' onClick={removeEquation}>Remover Equação</button>
       </div>
 
       <div className="resposta">
@@ -74,6 +98,7 @@ function App() {
             ))}
           </div>
       </div>
+      {mostraPopup && <Popup />}
     </>
   );
 }

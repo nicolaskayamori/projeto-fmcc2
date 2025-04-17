@@ -5,6 +5,7 @@
 }
 
 .titulo {
+  margin-top: 25px;
   text-align: center;
   padding-bottom: 50px;
 }
@@ -39,23 +40,36 @@
 
 button {
   margin-top: 20px;
-  padding: 15px 30px;
-  border-radius: 15px;
-  background-color: #4CAF50; /* Cor do botão */
+  padding: 15px 20px;
+  border-radius: 20px;
+  background-color: green; /* Cor do botão */
   color: white;
-  border: none;
+  border: none
 }
+
+.buttonRemove {
+  background-color: red;
+}
+
 
 button:hover {
   cursor: pointer;
   background-color: #45a049; /* Cor mais escura no hover */
 }
 
-button:focus {
+.buttonSubmit:focus, .buttonEquation:focus {
   outline: 2px solid #4CAF50;
   outline-offset: 2px;
 }
 
+.buttonRemove:hover {
+  background-color: rgb(248, 73, 73);
+}
+
+.buttonRemove:focus {
+  outline: 2px solid rgb(248, 73, 73);
+  outline-offset: 2px;
+}
 .resposta  {
   font-size: 0.85rem;
   display: flex;
@@ -63,4 +77,61 @@ button:focus {
   align-items: center; /* Centraliza horizontalmente */
   margin-top: 30px;
   text-align: center; /* Centraliza o texto dentro da div */
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transform: scale(0.9);
+  animation: scaleUp 0.2s ease-out 0.1s forwards;
+}
+
+.popup-icon {
+  color: #ff9800;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  to { transform: scale(1); }
+}
+
+/* Fade-out quando fechar */
+.popup-overlay.closing {
+  animation: fadeOut 0.2s ease-out forwards;
+}
+
+.popup-content.closing {
+  animation: scaleDown 0.2s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+
+@keyframes scaleDown {
+  to { transform: scale(0.9); }
 }
