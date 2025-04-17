@@ -18,6 +18,13 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.passos {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  flex-wrap: wrap;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
