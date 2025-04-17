@@ -23,7 +23,7 @@ public class TcrController {
             int right = equacoes.get(i).getRight();
             int mod = equacoes.get(i).getMod();
 
-            if (left.charAt(0) != 'x' && left.charAt(0) != '1' && TcrStatic.isInteger(left.substring(0, left.length() - 1))) {
+            if (!left.trim().equals("x") && !left.trim().substring(0, left.length() - 1).equals("1")) {
 
                 msg += left + " = " + right + "(mod " + mod + ") precisa calcular inverso\n";
 
@@ -32,7 +32,7 @@ public class TcrController {
                 if (coeficienteA == null)
                     return msg += "\nNao foi possivel calcular esse TCR, pois a equacao -> \n\n" + left + " = "
                             + right + "(mod " + mod + ")" + ", apresenta mod: " + mod
-                            + " e ladoEsquerdo: " + left.charAt(0) + ", nao CoPrimos";
+                            + " e ladoEsquerdo: " + left.substring(0, left.length() -1) + ", nao CoPrimos";
 
                 equacoes.get(i).setRight((right * coeficienteA) % mod);
             } else {

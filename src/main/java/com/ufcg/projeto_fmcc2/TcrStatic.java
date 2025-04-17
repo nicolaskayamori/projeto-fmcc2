@@ -12,17 +12,27 @@ public class TcrStatic {
         int[] todosCalculos = new int[equacoes.size()];
         retorno += "\nRealiza a divisao do M por cada mod de cada equacao, e depois calculamos seus inversos\n";
         int i = 1;
+        String calculoX = "X = ";
         for (EquacaoDTO equacao : equacoes) {
             int mod = equacao.getMod();
             int m = M / mod;
+            int inverso = calcularInversoMultiplicativo(m, 1, mod);
             retorno += "\nCalculamos o m de cada equacao: " + M + "/" + mod + " => " + "m" + i + " = " + m;
-            todosCalculos[i - 1] = calcularInversoMultiplicativo(m, 1, mod) * equacao.getRight() * m;
+            calculoX += representacao(inverso, equacao.getRight(), m, i, equacoes.size());
+            todosCalculos[i - 1] = inverso * equacao.getRight() * m;
             i++;
         }
         retorno += "\n\nObtemos os calculos de cada multiplicacao (m * d * c), agora basta somar todos e atribuir o mod de M, para descobri o valor de X\n\n";
+        retorno += calculoX + "\n\n";
 
         int resultado = ((Arrays.stream(todosCalculos).reduce(0, (a, b) -> a + b) % M + M) % M); // resultado Positivo
-        return retorno += "Chegamos ao resultado de: X = " + resultado;
+        return retorno += "Chegamos ao resultado de: X (mod " + M + ") = " + resultado;
+    }
+
+    private static String representacao(int inverso, int direita, int m, int indice, int len) {
+        if (indice == len)
+            return "(" + inverso + "*" + direita + "*" + m + ")";
+        return "(" + inverso + "*" + direita + "*" + m + ") + ";
     }
 
     private static int calcularM(List<EquacaoDTO> equacoes) {
@@ -34,13 +44,14 @@ public class TcrStatic {
     }
 
     public static  Integer calcularInversoMultiplicativo(int ladoEsquerdo, int ladoDireto, int mod) {
+        int a = ((ladoEsquerdo % mod + mod) % mod);
         if (!coPrimos(ladoEsquerdo, mod))
             return null;
-        return (euclidesExtendido(ladoEsquerdo, mod)[1] % mod + mod) % mod;
+        return (euclidesExtendido(a, mod)[1] % mod + mod) % mod;
     }
 
     public static Integer calcularInversoMultiplicativo(String ladoEsquerdo, int ladoDireto, int mod) {
-        int a = Integer.parseInt(ladoEsquerdo.substring(0, ladoEsquerdo.length() - 1)); // primeiro numero
+        int a = (((Integer.parseInt(ladoEsquerdo.substring(0, ladoEsquerdo.length() - 1))) % mod + mod) % mod); // primeiro numero
         if (!coPrimos(a, mod))
             return null;
         return (euclidesExtendido(a, mod)[1] % mod + mod) % mod;
@@ -94,12 +105,4 @@ public class TcrStatic {
         return  msg;
     }
 
-    public static boolean isInteger(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 }
