@@ -1,10 +1,11 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "Special Gothic Expanded One", sans-serif;
+  font-family: "Special Gothic Expanded One", sans-serif;;
 }
 
 .titulo {
+  margin-top: 25px;
   text-align: center;
   padding-bottom: 50px;
 }
@@ -13,35 +14,124 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  input {
-    margin: 20px;
-  }
-  p {
-    align-items: center;
-    margin-top: 20px;
-  }
-  button {
-    margin-left: 30px;
-    padding: 0px 20px
-  }
+}
+
+.inputs input {
+  margin: 20px;
+}
+
+.inputs p {
+  align-items: center;
+  margin-top: 20px;
+}
+
+.inputs button {
+  margin-left: 30px;
+  padding: 0px 20px;
 } 
+
+.botoes {
+  display: flex;
+  justify-content: center; /* Centraliza os botões horizontalmente */
+  gap: 20px;               /* Espaço entre os botões */
+  margin-top: 20px;        /* Margem superior para os botões */
+  width: 100%;             /* Certifica-se de que ocupa toda a largura da tela */
+}
 
 button {
   margin-top: 20px;
-  padding: 15px;
-  margin-right: 30px;
-  border-radius: 15px;
+  padding: 15px 20px;
+  border-radius: 20px;
+  background-color: green; /* Cor do botão */
+  color: white;
+  border: none
 }
+
+.buttonRemove {
+  background-color: red;
+}
+
 
 button:hover {
   cursor: pointer;
+  background-color: #45a049; /* Cor mais escura no hover */
 }
 
-.buttonSubmit {
-  background-color: green;
-  border: none;
+.buttonSubmit:focus, .buttonEquation:focus {
+  outline: 2px solid #4CAF50;
+  outline-offset: 2px;
 }
 
-.removeEquation {
-  background-color: rgba(100, 1, 0, 0.9);
+.buttonRemove:hover {
+  background-color: rgb(248, 73, 73);
+}
+
+.buttonRemove:focus {
+  outline: 2px solid rgb(248, 73, 73);
+  outline-offset: 2px;
+}
+.resposta  {
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza horizontalmente */
+  margin-top: 30px;
+  text-align: center; /* Centraliza o texto dentro da div */
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transform: scale(0.9);
+  animation: scaleUp 0.2s ease-out 0.1s forwards;
+}
+
+.popup-icon {
+  color: #ff9800;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  to { transform: scale(1); }
+}
+
+/* Fade-out quando fechar */
+.popup-overlay.closing {
+  animation: fadeOut 0.2s ease-out forwards;
+}
+
+.popup-content.closing {
+  animation: scaleDown 0.2s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+
+@keyframes scaleDown {
+  to { transform: scale(0.9); }
 }
